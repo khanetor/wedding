@@ -350,6 +350,9 @@ a {
    This is a deterrent, not DRM — screenshots are always possible. */
 .photo__img,
 .lightbox__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   -webkit-user-select: none;
   user-select: none;
   -webkit-user-drag: none;

@@ -6,13 +6,17 @@ on:
 
 jobs:
   publish:
-    runs-on: codeberg-small
+    runs-on: [codeberg-medium, codeberg-medium-lazy]
     steps:
       - run: |
           apt-get update
           apt-get install -y git
       - name: Checkout
         uses: actions/checkout@v5
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
       - name: Generate Page
         run: |
           bun install
