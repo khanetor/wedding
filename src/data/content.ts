@@ -218,7 +218,7 @@ const en: Locale = {
 
 const vi: Locale = {
   code: "vi",
-  prefix: "/vi",
+  prefix: "/vi/",
   events: {
     title: "C\u00E1c s\u1EF1 ki\u1EC7n c\u01B0\u1EDBi",
     description:

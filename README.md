@@ -1,4 +1,4 @@
-# Kha & Linh — Wedding Website
+# [Kha & Linh — Wedding Website](https://khanetor.codeberg.page/wedding)
 
 Astro-based wedding site (EN `/` + VI `/vi/`). Built on the [astro-photo-folio](https://github.com/XD-QIN/astro-photo-folio) theme.
 

@@ -5,6 +5,7 @@ import { giftMarkdown } from '../lib/gifts';
 
 const t = localeFromPath(Astro.url.pathname);
 const g = t.gifts;
+const base = import.meta.env.BASE_URL;
 ---
 
 <Layout title={g.title}>
@@ -24,7 +25,7 @@ const g = t.gifts;
 
       <section class="gift__section">
         <h2 class="gift__heading">{g.momoHeading}</h2>
-        <img class="gift__momo" src="/momo.webp" alt={g.momoAlt} loading="lazy" />
+        <img class="gift__momo" src={base + '/momo.webp'} alt={g.momoAlt} loading="lazy" />
       </section>
     </div>
   </section>

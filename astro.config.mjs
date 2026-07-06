@@ -3,6 +3,10 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
+  // Site is served at a subpath on Codeberg Pages:
+  // https://khanetor.codeberg.page/wedding/wedding
+  base: '/wedding',
+
   // Generate sitemap-index.xml + sitemap-0.xml (referenced from robots.txt).
   integrations: [
     sitemap({

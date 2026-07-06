@@ -2,10 +2,13 @@
 import Layout from '../layouts/Layout.astro';
 import { localeFromPath } from '../data/content';
 const t = localeFromPath(Astro.url.pathname);
+const base = import.meta.env.BASE_URL;
+// ponytail: home page hero background — base-prefixed via Astro CSS interpolation
+const heroImg = base + '/hero.webp';
 const h = t.home;
 ---
 
-<Layout>
+<Layout heroImg={heroImg}>
   <section class="page">
     <div class="prose">
       <h1 class="home__hero">{h.hero}</h1>
@@ -15,14 +18,14 @@ const h = t.home;
       </div>
       <p class="home__tagline lede">{h.tagline}</p>
       <div class="home__actions">
-        <a class="home__btn home__btn--brand" href={t.prefix + 'rsvp'}>{h.ctaRsvp}</a>
-        <a class="home__btn home__btn--alt" href={t.prefix + 'gifts'}>{h.ctaGifts}</a>
+        <a class="home__btn home__btn--brand" href={base + '/' + (t.prefix + 'rsvp').slice(1)}>{h.ctaRsvp}</a>
+        <a class="home__btn home__btn--alt" href={base + '/' + (t.prefix + 'gifts').slice(1)}>{h.ctaGifts}</a>
       </div>
 
       <div class="home__features">
         {
           h.features.map((f) => (
-            <a class="home__feature" href={f.link}>
+            <a class="home__feature" href={base + '/' + f.link.slice(1)}>
               <span class="home__feature-icon">{f.icon}</span>
               <span class="home__feature-title">{f.title}</span>
               <span class="home__feature-details">{f.details}</span>
@@ -42,7 +45,7 @@ const h = t.home;
   :global(body) {
     background-image:
       linear-gradient(rgba(197, 197, 197, 0.55), rgba(235, 235, 235, 0.85)),
-      url('/hero.webp');
+      var(--hero-img);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -51,7 +54,7 @@ const h = t.home;
   :global([data-theme='dark'] body) {
     background-image:
       linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
-      url('/hero.webp');
+      var(--hero-img);
   }
   :global(.sidebar),
   :global(.main) {
