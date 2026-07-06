@@ -1,0 +1,62 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Photo from '../components/Photo.astro';
+import { localeFromPath } from '../data/content';
+
+const t = localeFromPath(Astro.url.pathname);
+const s = t.story;
+---
+
+<Layout title={s.title} description={s.description}>
+  <section class="page">
+    <div class="prose">
+      <h1 class="page__title">{s.title}</h1>
+      <p class="lede">{s.lede}</p>
+
+      {
+        s.sections.map((section) => (
+          <section class="story__section">
+            <h2 class="story__heading">{section.heading}</h2>
+            <p class="story__date"><strong>{t.code === 'vi' ? 'Ng\u00E0y' : 'Date'}:</strong> {section.date}</p>
+            {section.body && <p class="story__body">{section.body}</p>}
+            {section.images.map((img) => (
+              <Photo src={img.src} alt={img.alt} />
+            ))}
+            {section.externalImage && (
+              <figure class="story__ext-figure">
+                <img src={section.externalImage.src} alt={section.externalImage.alt} loading="lazy" />
+              </figure>
+            )}
+          </section>
+        ))
+      }
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .story__section {
+    margin-top: 2.4rem;
+  }
+  .story__heading {
+    font-family: var(--serif-display);
+    font-weight: 500;
+    font-size: clamp(1.5rem, 3.2vw, 2rem);
+    margin-bottom: 0.6rem;
+  }
+  .story__date {
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 0.8rem;
+  }
+  .story__body {
+    margin-bottom: 1.2rem;
+  }
+  .story__ext-figure {
+    margin: 1rem 0;
+  }
+  .story__ext-figure img {
+    width: 100%;
+    border-radius: 4px;
+  }
+</style>

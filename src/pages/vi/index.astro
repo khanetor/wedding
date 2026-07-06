@@ -1,0 +1,157 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { localeFromPath } from '../../data/content';
+const t = localeFromPath(Astro.url.pathname);
+const h = t.home;
+---
+
+<Layout>
+  <section class="page">
+    <div class="prose">
+      <h1 class="home__hero">{h.hero}</h1>
+      <div class="home__dates">
+        <span>{h.hanoi}</span>
+        <span>{h.hcm}</span>
+      </div>
+      <p class="home__tagline lede">{h.tagline}</p>
+      <div class="home__actions">
+        <a class="home__btn home__btn--brand" href={t.prefix + 'rsvp'}>{h.ctaRsvp}</a>
+        <a class="home__btn home__btn--alt" href={t.prefix + 'gifts'}>{h.ctaGifts}</a>
+      </div>
+
+      <div class="home__features">
+        {
+          h.features.map((f) => (
+            <a class="home__feature" href={f.link}>
+              <span class="home__feature-icon">{f.icon}</span>
+              <span class="home__feature-title">{f.title}</span>
+              <span class="home__feature-details">{f.details}</span>
+            </a>
+          ))
+        }
+      </div>
+
+      <h2 class="home__thanks-title">{h.thankTitle}</h2>
+      <p>{h.thankBody}</p>
+      <p class="home__signoff">{h.signoff}</p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  :global(body) {
+    background-image:
+      linear-gradient(rgba(197, 197, 197, 0.55), rgba(235, 235, 235, 0.85)),
+      url('/hero.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+  :global([data-theme='dark'] body) {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
+      url('/hero.webp');
+  }
+  :global(.sidebar),
+  :global(.main) {
+    background: transparent;
+  }
+  .home__hero {
+    font-family: var(--serif-display);
+    font-weight: 500;
+    font-size: clamp(2.8rem, 7vw, 4.5rem);
+    line-height: 1.05;
+    margin-bottom: 0.6rem;
+    text-align: center;
+  }
+  .home__dates {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    color: var(--muted);
+    font-size: 1.15rem;
+    margin-bottom: 1.4rem;
+  }
+  .home__tagline {
+    text-align: center;
+    max-width: 48ch;
+    margin-inline: auto;
+  }
+  .home__actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.8rem 0 3rem;
+    flex-wrap: wrap;
+  }
+  .home__btn {
+    font-family: var(--serif-display);
+    font-size: 1.15rem;
+    padding: 0.6rem 2rem;
+    border: 1px solid var(--fg);
+    border-radius: 999px;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .home__btn--brand {
+    background: var(--fg);
+    color: var(--bg);
+  }
+  .home__btn--brand:hover {
+    opacity: 0.85;
+  }
+  .home__btn--alt {
+    background: transparent;
+    color: var(--fg);
+  }
+  .home__btn--alt:hover {
+    background: var(--fg);
+    color: var(--bg);
+  }
+  .home__features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.4rem;
+    margin: 2rem 0 3rem;
+  }
+  .home__feature {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 1.4rem 1.2rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .home__feature:hover {
+    border-color: var(--fg);
+    transform: translateY(-2px);
+  }
+  .home__feature-icon {
+    font-size: 1.8rem;
+  }
+  .home__feature-title {
+    font-family: var(--serif-display);
+    font-weight: 600;
+    font-size: 1.25rem;
+  }
+  .home__feature-details {
+    color: var(--muted);
+    font-size: 0.98rem;
+  }
+  .home__thanks-title {
+    font-family: var(--serif-display);
+    font-weight: 500;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    margin: 2rem 0 1rem;
+  }
+  .home__signoff {
+    font-family: var(--serif-display);
+    font-size: 1.2rem;
+    margin-top: 1rem;
+  }
+</style>

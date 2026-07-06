@@ -1,0 +1,75 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Countdown from '../components/Countdown.astro';
+import { localeFromPath } from '../data/content';
+
+const t = localeFromPath(Astro.url.pathname);
+const e = t.events;
+const eventHanoi = new Date('2025-12-29T11:00:00+07:00');
+const eventHCM = new Date('2026-01-11T11:00:00+07:00');
+---
+
+<Layout title={e.title} description={e.description}>
+  <section class="page">
+    <div class="prose">
+      <h1 class="page__title">{e.title}</h1>
+      <p class="lede">{e.intro}</p>
+
+      <h2 class="event__title">{e.hanoi.title}</h2>
+      <p>{e.hanoi.body}</p>
+      <ul class="event__details">
+        <li>⏰ <strong>{e.dateLabel}:</strong> {e.hanoi.date}</li>
+        <li>📍 <strong>{e.venueLabel}:</strong> {e.hanoi.venue}</li>
+      </ul>
+      <Countdown to={eventHanoi} locale={t.code} />
+      <div class="map-embed">
+        <iframe src={e.hanoi.map} title={e.hanoi.title} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
+      <h2 class="event__title">{e.hcm.title}</h2>
+      <p>{e.hcm.body}</p>
+      <ul class="event__details">
+        <li>⏰ <strong>{e.dateLabel}:</strong> {e.hcm.date}</li>
+        <li>📍 <strong>{e.venueLabel}:</strong> {e.hcm.venue}</li>
+      </ul>
+      <Countdown to={eventHCM} locale={t.code} />
+      <div class="map-embed">
+        <iframe src={e.hcm.map} title={e.hcm.title} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .event__title {
+    font-family: var(--serif-display);
+    font-weight: 500;
+    font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+    margin: 2.4rem 0 0.8rem;
+  }
+  .event__details {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .map-embed {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 1rem 0 2rem;
+    border-radius: 6px;
+  }
+  .map-embed iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>

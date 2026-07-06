@@ -1,0 +1,84 @@
+---
+import type { ImageMetadata } from 'astro';
+import { renderPhoto, GRID_SIZES, captionFromFilename } from '../lib/photos';
+import Lightbox from './Lightbox.astro';
+import { site as siteInfo } from '../config';
+import { digital as digitalOrder } from '../data/galleries';
+
+const all = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/digital/*.{jpg,jpeg,png,webp,avif,JPG,JPEG,PNG,WEBP,AVIF}',
+  { eager: true }
+);
+
+// Display order lives in src/data/galleries.ts (a string[]). Files not listed
+// there sink to the bottom, sorted by filename ascending.
+const entries = Object.entries(all).sort(([pathA], [pathB]) => {
+  const ia = digitalOrder.indexOf(pathA.split('/').pop()!);
+  const ib = digitalOrder.indexOf(pathB.split('/').pop()!);
+  const a = ia === -1 ? Infinity : ia;
+  const b = ib === -1 ? Infinity : ib;
+  return a - b || pathA.localeCompare(pathB, undefined, { numeric: true });
+});
+
+const photos = await Promise.all(
+  entries.map(async ([path, mod], i) => {
+    const photo = await renderPhoto(mod.default);
+    return { ...photo, alt: captionFromFilename(path, i) };
+  })
+);
+
+// Structured data: a simple ImageGallery of ImageObjects.
+const base = Astro.site ? Astro.site.href.replace(/\/$/, '') : '';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ImageGallery',
+  name: `${siteInfo.name} — Gallery`,
+  url: `${base}${Astro.url.pathname}`,
+  image: photos.map((p) => ({
+    '@type': 'ImageObject',
+    contentUrl: `${base}${p.full}`,
+    name: p.alt,
+  })),
+};
+---
+
+{
+  photos.length === 0 ? (
+    <p class="empty">
+      No photos yet. Drop image files into <code>src/assets/digital/</code> and they'll appear here.
+    </p>
+  ) : (
+    <section class="calendar-grid" aria-label="Wedding photographs">
+      {photos.map((photo, i) => (
+        <figure class="calendar-item">
+          <button
+            class="photo-tile"
+            type="button"
+            aria-label={`${photo.alt} — view larger`}
+            data-full={photo.src}
+            data-alt={photo.alt}
+          >
+            <picture>
+              <source type="image/avif" srcset={photo.avifSrcset} sizes={GRID_SIZES} />
+              <source type="image/webp" srcset={photo.webpSrcset} sizes={GRID_SIZES} />
+              <img
+                class="photo__img"
+                src={photo.src}
+                alt={photo.alt}
+                width={photo.width}
+                height={photo.height}
+                loading={i < 4 ? 'eager' : 'lazy'}
+                decoding="async"
+                draggable={false}
+              />
+            </picture>
+          </button>
+        </figure>
+      ))}
+    </section>
+  )
+}
+
+<Lightbox />
+
+{Astro.site && <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />}

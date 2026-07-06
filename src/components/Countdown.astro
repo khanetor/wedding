@@ -1,0 +1,124 @@
+---
+// Wedding countdown — counts down to (or up from) a target date.
+// Ported from the original VitePress Countdown.vue. Renders server-side with
+// a data island that ticks client-side every second.
+interface Props {
+  to: Date;
+  locale: 'en' | 'vi';
+}
+const { to, locale } = Astro.props;
+const target = to.getTime();
+---
+
+<div class="countdown" data-target={String(target)} data-locale={locale}>
+  <div class="countdown__label" data-label></div>
+  <div class="countdown__units">
+    <div class="countdown__unit">
+      <div class="countdown__value" data-days>0</div>
+      <div class="countdown__unit-label" data-days-label></div>
+    </div>
+    <div class="countdown__unit">
+      <div class="countdown__value" data-hours>0</div>
+      <div class="countdown__unit-label" data-hours-label></div>
+    </div>
+    <div class="countdown__unit">
+      <div class="countdown__value" data-minutes>0</div>
+      <div class="countdown__unit-label" data-minutes-label></div>
+    </div>
+    <div class="countdown__unit">
+      <div class="countdown__value" data-seconds>0</div>
+      <div class="countdown__unit-label" data-seconds-label></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const els = document.querySelectorAll<HTMLElement>('.countdown');
+  const fmt = new Intl.NumberFormat(undefined, { minimumIntegerDigits: 2, useGrouping: false });
+
+  const units = {
+    en: { days: 'days', hours: 'hours', minutes: 'minutes', seconds: 'seconds', until: 'until our wedding', since: 'since our wedding' },
+    vi: { days: 'ng\u00E0y', hours: 'gi\u1EDD', minutes: 'ph\u00FAt', seconds: 'gi\u00E2y', until: '\u0111\u1EBFn ng\u00E0y c\u01B0\u1EDBi', since: 'k\u1EC3 t\u1EEB ng\u00E0y c\u01B0\u1EDBi' },
+  } as const;
+
+  els.forEach((el) => {
+    const target = Number(el.dataset.target);
+    const loc = el.dataset.locale === 'vi' ? 'vi' : 'en';
+    const u = units[loc];
+    const label = el.querySelector<HTMLElement>('[data-label]')!;
+    const dDays = el.querySelector<HTMLElement>('[data-days]')!;
+    const dHours = el.querySelector<HTMLElement>('[data-hours]')!;
+    const dMin = el.querySelector<HTMLElement>('[data-minutes]')!;
+    const dSec = el.querySelector<HTMLElement>('[data-seconds]')!;
+    el.querySelector<HTMLElement>('[data-days-label]')!.textContent = u.days;
+    el.querySelector<HTMLElement>('[data-hours-label]')!.textContent = u.hours;
+    el.querySelector<HTMLElement>('[data-minutes-label]')!.textContent = u.minutes;
+    el.querySelector<HTMLElement>('[data-seconds-label]')!.textContent = u.seconds;
+
+    let timer: ReturnType<typeof setInterval> | null = null;
+    function tick() {
+      const diff = Math.floor((target - Date.now()) / 1000);
+      const past = diff < 0;
+      label.textContent = past ? u.since : u.until;
+      const abs = Math.abs(diff);
+      dDays.textContent = fmt.format(Math.floor(abs / 86400));
+      dHours.textContent = fmt.format(Math.floor((abs % 86400) / 3600));
+      dMin.textContent = fmt.format(Math.floor((abs % 3600) / 60));
+      dSec.textContent = fmt.format(abs % 60);
+    }
+    tick();
+    timer = setInterval(tick, 1000);
+    // ponytail: guard against duplicate timers on view-transition remount.
+    document.addEventListener('astro:before-swap', () => { if (timer) clearInterval(timer); }, { once: true });
+  });
+</script>
+
+<style>
+  .countdown {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+  }
+  .countdown__label {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--muted);
+  }
+  .countdown__units {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .countdown__unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 3rem;
+    gap: 0.2rem;
+    flex-grow: 1;
+    flex-basis: 0;
+  }
+  .countdown__value {
+    font-weight: bold;
+    font-size: 2rem;
+    font-family: var(--serif-display);
+  }
+  .countdown__unit-label {
+    text-transform: capitalize;
+    font-size: 1rem;
+  }
+  @media (max-width: 600px) {
+    .countdown__units {
+      gap: 1rem;
+    }
+    .countdown__unit {
+      min-width: 2.5rem;
+    }
+  }
+</style>

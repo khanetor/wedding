@@ -1,0 +1,26 @@
+name: Publish
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  publish:
+    runs-on: codeberg-small
+    steps:
+      - run: |
+          apt-get update
+          apt-get install -y git
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Generate Page
+        run: |
+          bun install
+          bun run build
+      - name: Publish
+        uses: https://codeberg.org/git-pages/action@v2
+        if: ${{ forge.ref == 'refs/heads/main'}}
+        with:
+          site: "https://${{ forge.repository_owner }}.codeberg.page/wedding/"
+          token: ${{ forge.token }}
+          source: dist

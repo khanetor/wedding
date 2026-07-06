@@ -1,0 +1,23 @@
+---
+// Site-wide JSON-LD: identifies the wedding website for search engines.
+import { site } from '../config';
+
+const base = Astro.site ? Astro.site.href.replace(/\/$/, '') : '';
+
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${base}/#website`,
+      url: `${base}/`,
+      name: site.title,
+      description: site.description,
+      inLanguage: 'en',
+    },
+  ],
+};
+
+---
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(graph)} />

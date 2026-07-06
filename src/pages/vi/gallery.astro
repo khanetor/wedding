@@ -1,0 +1,11 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PhotoGrid from '../../components/PhotoGrid.astro';
+import { localeFromPath } from '../../data/content';
+const t = localeFromPath(Astro.url.pathname);
+---
+
+<Layout title={t.gallery.title}>
+  <h1 class="gallery-label">{t.gallery.title}</h1>
+  <PhotoGrid />
+</Layout>

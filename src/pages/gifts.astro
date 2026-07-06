@@ -1,0 +1,63 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { localeFromPath } from '../data/content';
+import { giftMarkdown } from '../lib/gifts';
+
+const t = localeFromPath(Astro.url.pathname);
+const g = t.gifts;
+---
+
+<Layout title={g.title}>
+  <section class="page">
+    <div class="prose">
+      <h1 class="page__title">{g.title}</h1>
+      <p class="lede">{g.intro}</p>
+
+      {
+        g.sections.map((section) => (
+          <section class="gift__section">
+            <h2 class="gift__heading">{section.heading}</h2>
+            <div class="gift__body" set:html={giftMarkdown(section.body)} />
+          </section>
+        ))
+      }
+
+      <section class="gift__section">
+        <h2 class="gift__heading">{g.momoHeading}</h2>
+        <img class="gift__momo" src="/momo.webp" alt={g.momoAlt} loading="lazy" />
+      </section>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .gift__section {
+    margin-top: 2rem;
+  }
+  .gift__heading {
+    font-family: var(--serif-display);
+    font-weight: 500;
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    margin-bottom: 0.6rem;
+  }
+  .gift__body :global(ul) {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .gift__body :global(li) {
+    padding-left: 0.2rem;
+  }
+  .gift__body :global(a) {
+    color: var(--fg);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .gift__momo {
+    max-width: 320px;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+  }
+</style>
