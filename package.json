@@ -7,7 +7,11 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "vp check",
+    "lint": "vp lint",
+    "fmt": "vp fmt",
+    "prepare": "vp config"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
@@ -17,6 +21,14 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vite-plus": "1.7.0"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.21.0",
+      "onFail": "download"
+    }
   }
 }
