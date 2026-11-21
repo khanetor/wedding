@@ -10,7 +10,7 @@ Built on the [astro-photo-folio](https://github.com/XD-QIN/astro-photo-folio) th
 
 ```bash
 bun run dev       # Start development server with hot reload
-bun run build     # Build for production (also strips orphaned image sources)
+bun run build     # Build for production (reads the committed photo manifest)
 bun run preview   # Preview production build locally
 ```
 
@@ -21,26 +21,27 @@ No tests exist in this project. Run `bunx tsc --noEmit` for type checking.
 ## Architecture
 
 ```
+photos/                 # ORIGINAL photos — gitignored, uploaded to the bucket
+├── digital/            # Gallery photos (wedding album) — ordered via galleries.ts
+└── blog/               # Story-page photos (the-wish, sup, cruise, etc.)
+
 src/
-├── assets/
-│   ├── digital/        # Gallery photos (wedding album) — ordered via galleries.ts
-│   └── blog/           # Story-page photos (the-wish, sup, cruise, etc.)
+├── assets/             # Only the seal logos; photos are not in the repo
 ├── components/         # Sidebar, PhotoGrid, Photo, Lightbox, Logo, Icon,
 │                       #   Countdown, BaseSchema
 ├── data/
 │   ├── content.ts      # All i18n strings (EN + VI) — the single source of locale content
-│   └── galleries.ts    # Gallery photo display order
-├── lib/photos.ts       # web-resolution image rendering (responsive WebP, MAX_WEB=3840)
+│   └── galleries.ts    # Gallery photo display order (filenames in the bucket)
+├── lib/photos.ts       # builds bucket URLs + srcsets from the manifest (MAX_WEB=3840)
 ├── layouts/Layout.astro
 ├── pages/              # index, events, story, gallery, rsvp, gifts (+ vi/ mirrors)
 ├── styles/global.css   # Theme styles (sidebar layout, lightbox, prose, etc.)
 └── config.ts           # Site name, nav (EN + VI), social links
 public/
-├── hero.jpeg           # Home page background image
+├── hero.webp           # Home page background image
 ├── momo.webp            # Momo QR on gifts page
 └── _headers             # CSP + security headers (applied by static host)
-scripts/
-└── strip-unreferenced-assets.mjs  # post-build: removes orphaned image originals
+(no scripts/ — the one-time photo upload script is not kept in the repo)
 ```
 
 ### Internationalization
@@ -51,16 +52,17 @@ The Sidebar has a language toggle (EN ⇄ VI) that swaps the `/vi` prefix while 
 
 ### Images
 
-- **Gallery photos** go in `src/assets/digital/`. Display order is defined by the `order` field in `src/data/galleries.ts` (matching the original VitePress gallery order). Photos are rendered as responsive WebP via `renderPhoto()`, capped at 3840px.
-- **Story photos** go in `src/assets/blog/` and are referenced by filename via the `<Photo>` component.
-- The build never ships full-resolution originals — `scripts/strip-unreferenced-assets.mjs` deletes orphaned sources after build.
+Photos are **not stored in this repo**. Originals live in `photos/` (gitignored) and are uploaded **as-is** to the public-read `my-wedding` bucket under `photos/<dir>/<filename>`. There is no build-time image processing and no rendition variants: each photo is a single plain `<img>` pointing at `PHOTO_BASE` (`src/config.ts`), so CI needs no bucket credentials and the deployed site is ~1.5 MB. Originals are uploaded with `Cache-Control: public, max-age=604800`, so replacing a photo takes up to a week to show up for repeat visitors.
+
+- **Gallery photos** live in `photos/digital/`. Display order is defined by the ordered array in `src/data/galleries.ts`; tiles are cropped to 3:2 by CSS.
+- **Story photos** live in `photos/blog/` and are referenced by filename via the `<Photo>` component.
 - `public/hero.jpeg` is the home page background (with a gradient overlay; darker overlay in dark mode).
 
 ### Components
 
 - `Countdown.astro` — counts down to (or up from) a wedding date; locale-aware labels. Server-renders initial values, ticks client-side.
-- `PhotoGrid.astro` — the gallery grid with lightbox; reads from `src/assets/digital/`.
-- `Photo.astro` — a single in-story photo with lightbox; reads from `src/assets/blog/`.
+- `PhotoGrid.astro` — the gallery grid with lightbox; reads the `digital/` entries of the photo manifest.
+- `Photo.astro` — a single in-story photo with lightbox; reads the `blog/` entries of the photo manifest.
 - `Lightbox.astro` — shared full-screen photo viewer.
 
 ### Styling
@@ -78,9 +80,9 @@ Global styles in `src/styles/global.css`. Uses CSS variables for theming (`--bg`
 
 **Editing content:** Edit strings in `src/data/content.ts` — both locales live there. The two page copies (`pages/` and `pages/vi/`) read from it automatically.
 
-**Adding a gallery photo:** Drop the file in `src/assets/digital/`, then add an entry with the next `order` number in `src/data/galleries.ts`.
+**Adding a gallery photo:** Drop the original in `photos/digital/`, add its filename to `src/data/galleries.ts`, and upload it with `rc put photos/digital/<file> public-buckets/my-wedding/photos/digital/<file>`.
 
-**Adding a story photo:** Drop the file in `src/assets/blog/`, then reference it by filename in the `images` array of the relevant story section in `content.ts`.
+**Adding a story photo:** Drop the original in `photos/blog/`, reference it by filename in the `images` array of the relevant story section in `content.ts`, and upload it the same way.
 
 ### Resources
 

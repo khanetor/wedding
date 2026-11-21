@@ -15,6 +15,11 @@ export const site = {
     'Join us in celebrating the wedding of Kha & Linh. Find all the information you need about our special day.',
 };
 
+// Public base URL of the photo originals in the `my-wedding` bucket. Photos are
+// uploaded as-is (no renditions), never committed. Paths under it are
+// <dir>/<filename>, e.g. digital/photo-1.jpg.
+export const PHOTO_BASE = 'https://rustfs.khanetor.me/my-wedding/photos';
+
 // Left-hand navigation (English). The VI nav is generated from this with the
 // viNav map below.
 export const nav: NavItem[] = [

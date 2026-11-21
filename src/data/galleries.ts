@@ -1,9 +1,8 @@
-// ponytail: no runtime validation that listed files exist in src/assets/digital/.
-// A typo or deleted file sends that photo to the bottom of the grid silently.
-// If photo count grows, generate this from the filesystem via a build-time glob.
+// ponytail: no validation that listed files exist in photos/digital/ — a typo
+// or renamed file leaves a broken <img> on the gallery page.
 
-// Wedding gallery photos live in src/assets/digital/. Array order is the
-// display order; filenames are matched against the glob in PhotoGrid.astro.
+// Wedding gallery photos live in photos/digital/ and are uploaded to the bucket
+// under that same name. Array order is the display order.
 export const digital: string[] = [
   'photo-24.jpg',
   'photo-3.jpg',
