@@ -9,14 +9,15 @@ Built on the [astro-photo-folio](https://github.com/XD-QIN/astro-photo-folio) th
 ## Build Commands
 
 ```bash
-bun run dev       # Start development server with hot reload
-bun run build     # Build for production
-bun run preview   # Preview production build locally
+pnpm dev          # dev server with hot reload
+pnpm build        # production build
+pnpm preview      # preview the build locally
+pnpm check        # oxfmt + oxlint (--fix to write)
 ```
 
-**Always use `bun` and `bunx` — never npm, npx, pnpm, yarn, or node directly.**
+pnpm + Node 26 only — never bun, npm, or yarn; both are pinned in `package.json` (`devEngines`). `pnpm install` runs `prepare` → `vp config`, which installs the pre-commit hook (`.vite-hooks/pre-commit` → `vp staged`). Lint, format and staged config live in `vite.config.ts`.
 
-No tests exist in this project. Run `bunx tsc --noEmit` for type checking.
+No tests exist in this project. Type check with `pnpm exec tsc --noEmit`.
 
 ## Deployment
 
@@ -43,7 +44,7 @@ src/
 └── config.ts           # Site name, nav (EN + VI), social links
 public/
 ├── hero.webp           # Home page background image
-├── momo.webp            # Momo QR on gifts page
+├── momo.webp           # Momo QR on gifts page
 └── _headers             # CSP + security headers (applied by static host)
 ```
 
@@ -78,6 +79,7 @@ Global styles in `src/styles/global.css`. Uses CSS variables for theming (`--bg`
 - `@astrojs/sitemap` — sitemap generation
 - `@fontsource/cormorant-garamond`, `@fontsource/eb-garamond` — self-hosted fonts
 - `@astrojs/check`, `typescript` (dev) — type checking
+- `vite-plus` (dev) — `vp` CLI: oxlint, oxfmt, git hooks
 
 ### Common Tasks
 

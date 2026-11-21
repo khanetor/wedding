@@ -5,17 +5,15 @@ Astro-based wedding site (EN `/` + VI `/vi/`). Built on the [astro-photo-folio](
 ## Develop
 
 ```bash
-bun install
-bun run dev
+pnpm install
+pnpm dev
 ```
 
 ## Build
 
 ```bash
-bun run build     # outputs dist/
-bun run preview   # preview the build locally
+pnpm build     # outputs dist/
+pnpm preview   # preview the build locally
 ```
 
-**Always use `bun`/`bunx` — never npm, npx, pnpm, yarn, or node directly.**
-
-See [AGENTS.md](AGENTS.md) for architecture and conventions.
+Node 26 + pnpm 12 are pinned in `package.json`. See [AGENTS.md](AGENTS.md) for lint/format, git hooks and architecture.
