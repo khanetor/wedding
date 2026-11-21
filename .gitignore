@@ -20,6 +20,3 @@ Thumbs.db
 
 # editor
 .vscode/
-
-# photo originals — uploaded to the my-wedding bucket, never committed
-photos/
