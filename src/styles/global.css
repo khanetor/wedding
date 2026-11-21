@@ -14,32 +14,32 @@
    @capsizecss/unpack (web metrics) against @capsizecss/metrics (fallbacks);
    regenerate if the web fonts change. */
 @font-face {
-  font-family: 'EB Garamond Fallback';
-  src: local('Georgia');
+  font-family: "EB Garamond Fallback";
+  src: local("Georgia");
   size-adjust: 86.3614%;
   ascent-override: 116.603%;
   descent-override: 34.5061%;
   line-gap-override: 0%;
 }
 @font-face {
-  font-family: 'EB Garamond Fallback';
-  src: local('Times New Roman');
+  font-family: "EB Garamond Fallback";
+  src: local("Times New Roman");
   size-adjust: 94.7692%;
   ascent-override: 106.2581%;
   descent-override: 31.4448%;
   line-gap-override: 0%;
 }
 @font-face {
-  font-family: 'Cormorant Garamond Fallback';
-  src: local('Georgia');
+  font-family: "Cormorant Garamond Fallback";
+  src: local("Georgia");
   size-adjust: 88.6046%;
   ascent-override: 104.2835%;
   descent-override: 32.3911%;
   line-gap-override: 0%;
 }
 @font-face {
-  font-family: 'Cormorant Garamond Fallback';
-  src: local('Times New Roman');
+  font-family: "Cormorant Garamond Fallback";
+  src: local("Times New Roman");
   size-adjust: 97.2308%;
   ascent-override: 95.0316%;
   descent-override: 29.5174%;
@@ -59,8 +59,8 @@
   --gap: clamp(0.5rem, 1.1vw, 1rem);
   --read: 72ch;
 
-  --serif-display: 'Cormorant Garamond', 'Cormorant Garamond Fallback', Georgia, 'Times New Roman', serif;
-  --serif-body: 'EB Garamond', 'EB Garamond Fallback', Georgia, 'Times New Roman', serif;
+  --serif-display: "Cormorant Garamond", "Cormorant Garamond Fallback", Georgia, "Times New Roman", serif;
+  --serif-body: "EB Garamond", "EB Garamond Fallback", Georgia, "Times New Roman", serif;
   /* ponytail: --serif-cjk removed — unused. Wire into VI page type scale via
      [lang='vi'] .prose { font-family: var(--serif-cjk); } if CJK fonts are
      ever self-hosted. */
@@ -296,7 +296,7 @@ a {
 /* Middot separators drawn with ::before so there's never a dangling dot
    (mirrors .post__meta). */
 .site-footer__line > * + *::before {
-  content: '·';
+  content: "·";
   margin: 0 0.35em;
   opacity: 0.7;
 }
@@ -783,7 +783,7 @@ a {
 /* ── Dark theme — Sublime Text default (Monokai) ───────────────────────────
    Additive and colors-only: layout and the light theme are unchanged. Toggled
    via data-theme="dark" on <html> (system preference + the sidebar toggle). */
-:root[data-theme='dark'] {
+:root[data-theme="dark"] {
   --bg: #272822; /* Monokai background */
   --fg: #f8f8f2; /* Monokai foreground */
   --muted: #8f8a76; /* readable Monokai comment tone */
@@ -795,10 +795,10 @@ a {
 .brand__mark--dark {
   display: none;
 }
-:root[data-theme='dark'] .brand__mark--light {
+:root[data-theme="dark"] .brand__mark--light {
   display: none;
 }
-:root[data-theme='dark'] .brand__mark--dark {
+:root[data-theme="dark"] .brand__mark--dark {
   display: block;
 }
 
@@ -816,18 +816,18 @@ a {
 .theme-toggle__sun {
   display: none;
 }
-:root[data-theme='dark'] .theme-toggle__moon {
+:root[data-theme="dark"] .theme-toggle__moon {
   display: none;
 }
-:root[data-theme='dark'] .theme-toggle__sun {
+:root[data-theme="dark"] .theme-toggle__sun {
   display: block;
 }
 
 /* Surfaces/text that don't read from the variables above. */
-:root[data-theme='dark'] ::selection {
+:root[data-theme="dark"] ::selection {
   background: #49483e;
   color: #f8f8f2;
 }
-:root[data-theme='dark'] .empty code {
+:root[data-theme="dark"] .empty code {
   background: #3e3d32;
 }

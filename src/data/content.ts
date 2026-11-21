@@ -90,8 +90,7 @@ const en: Locale = {
       title: "Wedding Party in Ho Chi Minh City",
       body: "Our main wedding celebration will take place in the vibrant Ho Chi Minh City. We look forward to sharing this momentous occasion with all of you.",
       date: "Sunday, 11:00, January 11, 2026",
-      venue:
-        "Pavillon Tan Son Nhat, 202 Hoang Van Thu st., Ward 9, Phu Nhuan District, Ho Chi Minh City, Vietnam",
+      venue: "Pavillon Tan Son Nhat, 202 Hoang Van Thu st., Ward 9, Phu Nhuan District, Ho Chi Minh City, Vietnam",
       map: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.134738705387!2d106.66826771125325!3d10.800990889304837!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752928b68fbc3f%3A0xc58bea5686708420!2zVHJ1bmcgVMOibSBI4buZaSBOZ2jhu4sgJiBUaeG7h2MgQ8aw4bubaSBQYXZpbGxvbiBUw6JuIFPGoW4gTmjhuqV0!5e0!3m2!1sfi!2sfi!4v1759253938944!5m2!1sfi!2sfi",
     },
   },
@@ -196,8 +195,7 @@ const en: Locale = {
       {
         icon: "\u{1F389}",
         title: "The Big Days",
-        details:
-          "Find all the details about the wedding ceremony and reception.",
+        details: "Find all the details about the wedding ceremony and reception.",
         link: "/events",
       },
       {
@@ -231,13 +229,11 @@ const vi: Locale = {
       title: "Ti\u1EC7c b\u00E1o h\u1EF7 t\u1EA1i H\u00E0 N\u1ED9i",
       body: "M\u1EDDi b\u1EA1n \u0111\u1EBFn tham d\u1EF1 b\u1EEFA ti\u1EC7c th\u00E2n m\u1EADt c\u00F9ng gia \u0111\u00ECnh ch\u00FAng m\u00ECnh.",
       date: "Th\u1EE9 Hai, 11:00, ng\u00E0y 29 th\u00E1ng 12 n\u0103m 2025",
-      venue:
-        "Tr\u1ED1ng \u0110\u1ED3ng Palace, 40 H\u00E0ng C\u00F3t, Ho\u00E0n Ki\u1EBFm, H\u00E0 N\u1ED9i",
+      venue: "Tr\u1ED1ng \u0110\u1ED3ng Palace, 40 H\u00E0ng C\u00F3t, Ho\u00E0n Ki\u1EBFm, H\u00E0 N\u1ED9i",
       map: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.8738140325736!2d105.84422976119241!3d21.037734437388757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135abb95cf9d3d1%3A0xf3f702ec451c57e2!2zVHLhu5FuZyDEkOG7k25nIFBhbGFjZQ!5e0!3m2!1sfi!2sfi!4v1759608602595!5m2!1sfi!2sfi",
     },
     hcm: {
-      title:
-        "L\u1EC5 th\u00E0nh h\u00F4n t\u1EA1i Th\u00E0nh ph\u1ED1 H\u1ED3 Ch\u00ED Minh",
+      title: "L\u1EC5 th\u00E0nh h\u00F4n t\u1EA1i Th\u00E0nh ph\u1ED1 H\u1ED3 Ch\u00ED Minh",
       body: "L\u1EC5 c\u01B0\u1EDBi ch\u00EDnh c\u1EE7a ch\u00FAng m\u00ECnh s\u1EBD di\u1EC5n ra t\u1EA1i Th\u00E0nh ph\u1ED1 H\u1ED3 Ch\u00ED Minh s\u00F4i \u0111\u1ED9ng. Ch\u00FAng m\u00ECnh mong ch\u1EDD \u0111\u01B0\u1EE3c chia s\u1EBB kho\u1EA3nh kh\u1EAFc tr\u1ECDng \u0111\u1EA1i n\u00E0y v\u1EDBi t\u1EA5t c\u1EA3 c\u00E1c b\u1EA1n.",
       date: "Ch\u1EE7 Nh\u1EADt, 11:00, ng\u00E0y 11 th\u00E1ng 1 n\u0103m 2026",
       venue:
