@@ -3,8 +3,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  // Site is served at a subpath on Codeberg Pages:
-  // https://khanetor.codeberg.page/wedding/wedding
+  // Site is a project page served at a subpath:
+  // https://khanetor.github.io/wedding
   base: '/wedding',
 
   // Generate sitemap-index.xml + sitemap-0.xml (referenced from robots.txt).
@@ -21,7 +21,7 @@ export default defineConfig({
   // Your production domain — used for canonical URLs, Open Graph tags, the
   // sitemap, robots.txt, and the JSON-LD. CHANGE THIS to your own domain;
   // everything URL-bound is derived from it.
-  site: 'https://khanetor.codeberg.page/wedding',
+  site: 'https://khanetor.github.io/wedding',
 
   // Fully static output — deploy the generated dist/ to any static host.
   // Images are optimized at build time with sharp.

@@ -18,6 +18,10 @@ bun run preview   # Preview production build locally
 
 No tests exist in this project. Run `bunx tsc --noEmit` for type checking.
 
+## Deployment
+
+Pushing to `main` builds with `.github/workflows/pages.yml` and deploys to GitHub Pages at <https://khanetor.github.io/wedding>. GitHub Pages ignores `public/_headers`, so the CSP/security headers only apply on hosts that honour that convention.
+
 ## Architecture
 
 ```
